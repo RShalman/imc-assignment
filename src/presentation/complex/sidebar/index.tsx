@@ -4,6 +4,7 @@ import { Button } from "../../commons/button";
 import { observer } from "mobx-react-lite";
 import { useAppStore } from "../../providers/app-provider/app-provider";
 import { IMenuOption } from "../../providers/app-provider/app-provider.d";
+import Logo from "../../commons/logo";
 
 const buttons = [
   {
@@ -21,6 +22,7 @@ const Sidebar = observer(() => {
 
   return (
     <aside className={"sideBar"}>
+      <Logo />
       {buttons.map((btn) => (
         <Button
           key={btn.name}
