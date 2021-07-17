@@ -7,28 +7,12 @@ import { IMenuOption } from "../../providers/app-provider/app-provider.d";
 
 const buttons = [
   {
-    name: "Products",
-    option: "products",
+    name: "Tables",
+    option: "tables",
   },
   {
-    name: "Customers",
-    option: "customers",
-  },
-  {
-    name: "Invoices",
-    option: "invoices",
-  },
-  {
-    name: "Revenues",
-    option: "revenues",
-  },
-  {
-    name: "Best customers",
-    option: "bestCustomers",
-  },
-  {
-    name: "Best products categories",
-    option: "bestProductsCategories",
+    name: "Charts",
+    option: "charts",
   },
 ];
 
@@ -36,7 +20,7 @@ const Sidebar = observer(() => {
   const appStore = useAppStore().root;
 
   return (
-    <div className={"sideBar"}>
+    <aside className={"sideBar"}>
       {buttons.map((btn) => (
         <Button
           key={btn.name}
@@ -47,7 +31,7 @@ const Sidebar = observer(() => {
           onClick={() => appStore.setMenuOption(btn.option as IMenuOption)}
         />
       ))}
-    </div>
+    </aside>
   );
 });
 

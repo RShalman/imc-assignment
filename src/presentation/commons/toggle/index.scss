@@ -1,0 +1,22 @@
+.toggle {
+  display: flex;
+  flex-flow: row wrap;
+  background-color: #00b5b1;
+  border-radius: 100px;
+  border: 5px solid #00b5b1;
+  max-width: fit-content;
+
+  .toggleOption {
+    padding: 15px;
+    border-radius: 25px;
+    cursor: pointer;
+
+    &[data-active-toggle='true'] {
+      background-color: antiquewhite;
+    }
+
+    &:not([data-active-toggle='true']) {
+      color: white;
+    }
+  }
+}

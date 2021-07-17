@@ -1,0 +1,21 @@
+.filters {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  min-height: 60px;
+  padding: 20px;
+  background-color: rgb(0, 81, 149);
+
+  .toggleWrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+
+    .toggleLabel {
+      text-align: center;
+      color: white;
+      margin-top: 0;
+    }
+
+  }
+}
