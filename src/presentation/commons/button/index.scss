@@ -1,0 +1,50 @@
+.button {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid;
+    border-radius: 25px;
+    outline: none;
+    font: inherit;
+    color: inherit;
+    background: none;
+    cursor: pointer;
+
+    &.dimension-s {
+        max-width: 100px;
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    &.dimension-m {
+        max-width: 150px;
+        font-size: 14px;
+        line-height: 16px;
+    }
+
+    &.dimension-l {
+        max-width: 250px;
+        font-size: 16px;
+        line-height: 18px;
+    }
+
+    &.white {
+        color: white;
+        border-color: white;
+
+        &:hover {
+            color: black;
+            border-color: black;
+        }
+    }
+
+    &.black {
+        color: black;
+        border-color: black;
+
+        &:hover {
+            color: white;
+            border-color: white;
+        }
+    }
+}
+

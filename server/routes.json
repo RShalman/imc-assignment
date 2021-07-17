@@ -1,0 +1,7 @@
+{
+  "/api/*": "/$1",
+  "/revenues/monthly": "/monthly-revenues",
+  "/revenues/weekly": "/weekly-revenues",
+  "/customers/revenues": "/customers-revenues",
+  "/categories/revenues": "/categories-revenues?_sort=total_revenue&_order=desc"
+}

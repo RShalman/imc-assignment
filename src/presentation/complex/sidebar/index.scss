@@ -1,0 +1,21 @@
+.sideBar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: rgb(0, 130, 186);
+    background-image: radial-gradient(circle at -5% 105%, rgb(0, 181, 177) 0%, rgb(0, 130, 186) 32%, rgb(0, 81, 149) 96%);;
+    padding: 20px;
+    min-width:  300px;
+    min-height: 100%;
+
+    & > .button {
+        margin: 20px 0;
+        color: white;
+
+        &.chosen {
+            color: black;
+            border-color: black;
+        }
+    }
+}
