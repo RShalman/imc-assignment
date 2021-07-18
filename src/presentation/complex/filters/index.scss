@@ -1,20 +1,51 @@
 .filters {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  height: 100px;
-  padding: 20px;
-  background-color: rgb(0, 81, 149);
+  position: relative;
+  height: 0;
 
-  .toggleWrapper {
+  .filtersWrapper {
+    position: relative;
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: flex-end;
+    align-items: center;
+    height: auto;
+    background-color: transparent;
+    max-height: 0;
+    margin-right: 80px;
+    transition: max-height 0.15s ease-out;
 
-    .toggleLabel {
-      text-align: center;
-      color: white;
-      margin-top: 0;
+    &.open{
+      max-height: 500px;
+      transition: max-height 0.75s ease-in;
+
+      & .toggleWrapper {
+        transform: translateY(0);
+      }
     }
+
+    .toggleWrapper {
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: center;
+      align-items: center;
+      margin: 20px;
+      transform: translateY(calc(-100% - 40px));
+      transition: transform 0.25s ease-in;
+
+      .toggleLabel {
+        text-align: center;
+        font-size: 14px;
+        color: black;
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .filterIcon {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    cursor: pointer;
   }
 }

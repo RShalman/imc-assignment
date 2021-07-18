@@ -4,6 +4,7 @@ import { useAppStore } from "../../providers/app-provider/app-provider";
 import "./index.scss";
 
 import Tables from "../../complex/tables";
+import Spinner from "../../commons/spinner";
 
 const TablesPage = observer(() => {
   const appStore = useAppStore().root;
@@ -27,7 +28,7 @@ const TablesPage = observer(() => {
           />
         </>
       ) : (
-        "Loading..."
+        <Spinner />
       )}
     </div>
   );

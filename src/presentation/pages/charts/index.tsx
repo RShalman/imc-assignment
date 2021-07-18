@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useAppStore } from "../../providers/app-provider/app-provider";
 import "./index.scss";
 import Charts from "../../complex/charts";
+import Spinner from "../../commons/spinner";
 
 const ChartsPage = observer(() => {
   const appStore = useAppStore().root;
@@ -53,7 +54,7 @@ const ChartsPage = observer(() => {
           }
         </>
       ) : (
-        "Loading..."
+        <Spinner />
       )}
     </div>
   );
