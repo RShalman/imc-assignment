@@ -7,3 +7,17 @@ export function getProductsApi(id?: number) {
     id !== undefined ? `/api/products/${id}` : "/api/products/"
   );
 }
+
+export function getInvoicesApi(id?: number) {
+  return apiInstance.get(
+    id !== undefined ? `/api/invoices/${id}` : "/api/invoices"
+  );
+}
+
+export function getBestCustomersApi(id?: number) {
+  return apiInstance.get(
+    id !== undefined
+      ? `/api/customers/revenues/${id}`
+      : "/api/customers/revenues"
+  );
+}
