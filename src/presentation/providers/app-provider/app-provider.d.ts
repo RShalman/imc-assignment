@@ -25,6 +25,10 @@ export type ITables = Record<ITableTypes, ITable>
 export type IChartTypes = 'revenuesPerProdCat' | 'cumulativeInvoices'
 export type IChart = {
   label: string;
-  data: Record<string, any>[]
+  data: Record<string, any>[] & {
+    monthly: Record<string, any>[],
+    weekly: Record<string, any>[]
+  }
 }
+
 export type ITables = Record<IChartTypes, IChart>

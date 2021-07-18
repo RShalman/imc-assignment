@@ -1,6 +1,5 @@
 import {
   IChart,
-  IChartTypes,
   IFilterOption,
   IFilterTypes,
   IMenuOption,
@@ -11,8 +10,8 @@ import { flow } from "mobx";
 import {
   getBestCustomersApi,
   getInvoicesApi,
-  getProductsApi,
   getProductsCategoriesWithRevenuesApi,
+  getRevenuesByPeriodApi,
 } from "../../../api";
 import moment from "moment";
 import { financial, isEmptyObject } from "../../../utils";
@@ -52,11 +51,17 @@ export function createAppProviderStore(this: any) {
       },
       cumulativeInvoices: {
         label: "%period% cumulative invoices %type%",
-        data: null as unknown as IChart["data"],
+        data: {
+          monthly: null as unknown as IChart["data"]["monthly"],
+          weekly: null as unknown as IChart["data"]["weekly"],
+        },
       },
     },
     menuOption: null as unknown as IMenuOption,
     products: null as unknown as Record<number, unknown>,
+    getFiltersActiveName(filterType: IFilterTypes) {
+      return this.filters[filterType].options.find((p) => p.active)?.name;
+    },
     getChartsRevenuesPerProdCatLabel() {
       const type = this.filters.type.options.find((t) => t.active)?.name;
       return this.charts.revenuesPerProdCat.label.replace(
@@ -67,7 +72,7 @@ export function createAppProviderStore(this: any) {
     getChartsCumulativeInvoicesLabel() {
       const type = this.filters.type.options.find((t) => t.active)?.name;
       const period = this.filters.period.options.find((t) => t.active)?.name;
-      return this.charts.revenuesPerProdCat.label
+      return this.charts.cumulativeInvoices.label
         .replace(/%type%/gi, type ?? "")
         .replace(/%period%/gi, period ?? "");
     },
@@ -115,6 +120,85 @@ export function createAppProviderStore(this: any) {
             : { ...restData, total_invoice: financial(total_invoice) };
         });
     },
+    getCumulativeInvoicesMonthlyProcessed() {
+      return !this.charts.cumulativeInvoices.data.monthly
+        ? {}
+        : [...this.charts.cumulativeInvoices.data.monthly]
+            .sort(
+              (a, b) =>
+                (a.month !== b.month && moment(a.month).isAfter(b.month)
+                  ? 1
+                  : -1) || 0
+            )
+            .reduce((acc, cur) => {
+              const { total_revenue, total_margin, month } = cur;
+              const isFilterMargin =
+                this.filters.type.options.find((option) => option.active)
+                  ?.name === "margin";
+
+              if (isEmptyObject(acc)) {
+                acc = {
+                  labels: [],
+                  datasets: [
+                    {
+                      data: [],
+                      backgroundColor: "rgba(255, 99, 132, 0.2)",
+                      borderColor: "rgba(255, 99, 132, 1)",
+                      borderWidth: 1,
+                    },
+                  ],
+                };
+              }
+
+              acc.labels?.push(moment.months()[moment(month).month()]);
+              acc.datasets[0].data.push(
+                isFilterMargin
+                  ? financial(total_margin)
+                  : financial(total_revenue)
+              );
+
+              return acc;
+            }, {});
+    },
+    getCumulativeInvoicesWeeklyProcessed() {
+      return !this.charts.cumulativeInvoices.data.weekly
+        ? {}
+        : [...this.charts.cumulativeInvoices.data.weekly]
+            .sort((a, b) => {
+              const weekA = moment(a.week, "YYYY WW").week();
+              const weekB = moment(b.week, "YYYY WW").week();
+              return (weekA !== weekB && weekA > weekB ? 1 : -1) || 0;
+            })
+            .reduce((acc, cur) => {
+              const { total_revenue, total_margin, week } = cur;
+              const isFilterMargin =
+                this.filters.type.options.find((option) => option.active)
+                  ?.name === "margin";
+
+              if (isEmptyObject(acc)) {
+                acc = {
+                  labels: [],
+                  datasets: [
+                    {
+                      data: [],
+                      backgroundColor: "rgba(255, 99, 132, 0.2)",
+                      borderColor: "rgba(255, 99, 132, 1)",
+                      borderWidth: 1,
+                    },
+                  ],
+                };
+              }
+
+              acc.labels?.push(week);
+              acc.datasets[0].data.push(
+                isFilterMargin
+                  ? financial(total_margin)
+                  : financial(total_revenue)
+              );
+
+              return acc;
+            }, {});
+    },
     getBestCustomersTablesProcessed() {
       return this.tables.bestCustomers.data.map((dataObj) => {
         const { total_revenue, total_margin, ...restData } = dataObj;
@@ -135,9 +219,6 @@ export function createAppProviderStore(this: any) {
     },
     setTableData(type: ITableTypes, data: ITable["data"]) {
       this.tables[type].data = data;
-    },
-    setChartsData(type: IChartTypes, data: IChart["data"]) {
-      this.charts[type].data = data;
     },
     getInvoices: flow(function* (this: any) {
       try {
@@ -162,9 +243,17 @@ export function createAppProviderStore(this: any) {
     getProductsCategoriesWithRevenues: flow(function* (this: any) {
       try {
         const { data } = yield getProductsCategoriesWithRevenuesApi();
-        this.setChartsData("revenuesPerProdCat", data);
+        this.charts.revenuesPerProdCat.data = data;
       } catch (e) {
         console.log("GET_PRODUCTS_CATS_WITH_REVENUES", e);
+      }
+    }),
+    getRevenuesByPeriod: flow(function* (this: any, period) {
+      try {
+        const { data } = yield getRevenuesByPeriodApi(period);
+        this.charts.cumulativeInvoices.data[period] = data;
+      } catch (e) {
+        console.log("GET_REVENUES_BY_PERIOD", e);
       }
     }),
   };

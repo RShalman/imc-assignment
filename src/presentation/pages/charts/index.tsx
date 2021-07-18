@@ -6,21 +6,51 @@ import Charts from "../../complex/charts";
 
 const ChartsPage = observer(() => {
   const appStore = useAppStore().root;
+  const revenuesPerProdCatData = appStore.charts.revenuesPerProdCat.data;
+  const cumulativeInvoicesMonthly =
+    appStore.charts.cumulativeInvoices.data.monthly;
+  const cumulativeInvoicesWeekly =
+    appStore.charts.cumulativeInvoices.data.weekly;
+  const isMonthlyPeriod = appStore.getFiltersActiveName("period") === "monthly";
 
   useEffect(() => {
-    if (!appStore.charts.revenuesPerProdCat.data)
-      appStore.getProductsCategoriesWithRevenues();
-  }, [appStore.charts.revenuesPerProdCat.data]);
+    if (!revenuesPerProdCatData) appStore.getProductsCategoriesWithRevenues();
+  }, [revenuesPerProdCatData]);
+
+  useEffect(() => {
+    if (!cumulativeInvoicesMonthly && isMonthlyPeriod) {
+      appStore.getRevenuesByPeriod("monthly");
+    }
+
+    if (!cumulativeInvoicesWeekly && !isMonthlyPeriod) {
+      appStore.getRevenuesByPeriod("weekly");
+    }
+  }, [
+    cumulativeInvoicesMonthly,
+    cumulativeInvoicesWeekly,
+    appStore.getFiltersActiveName("period"),
+  ]);
 
   return (
     <div className={"chartsPage"}>
-      {appStore.charts.revenuesPerProdCat?.data ? (
+      {revenuesPerProdCatData ? (
         <>
           <Charts
             chartType={"bar"}
             label={appStore.getChartsRevenuesPerProdCatLabel()}
             data={appStore.getChartsRevenuesPerProdCatProcessed()}
           />
+          {
+            <Charts
+              chartType={"line"}
+              label={appStore.getChartsCumulativeInvoicesLabel()}
+              data={
+                isMonthlyPeriod
+                  ? appStore.getCumulativeInvoicesMonthlyProcessed()
+                  : appStore.getCumulativeInvoicesWeeklyProcessed()
+              }
+            />
+          }
         </>
       ) : (
         "Loading..."

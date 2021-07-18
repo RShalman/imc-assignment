@@ -29,3 +29,7 @@ export function getProductsCategoriesWithRevenuesApi(id?: number) {
       : "/api/categories/revenues"
   );
 }
+
+export function getRevenuesByPeriodApi(period: "monthly" | "weekly") {
+  return apiInstance.get(`/api/revenues/${period}`);
+}
