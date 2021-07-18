@@ -21,3 +21,11 @@ export function getBestCustomersApi(id?: number) {
       : "/api/customers/revenues"
   );
 }
+
+export function getProductsCategoriesWithRevenuesApi(id?: number) {
+  return apiInstance.get(
+    id !== undefined
+      ? `/api/categories/revenues/${id}`
+      : "/api/categories/revenues"
+  );
+}

@@ -8,3 +8,7 @@ export function financial(number: string | number) {
 
   return (modifyingNumber as number).toFixed(2);
 }
+
+export function isEmptyObject(obj: Record<string, unknown>) {
+  return Object.entries(obj).length === 0 && obj.constructor === Object;
+}

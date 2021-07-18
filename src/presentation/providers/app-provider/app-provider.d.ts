@@ -21,3 +21,10 @@ export type ITable = {
   data: Record<string, any>[]
 }
 export type ITables = Record<ITableTypes, ITable>
+
+export type IChartTypes = 'revenuesPerProdCat' | 'cumulativeInvoices'
+export type IChart = {
+  label: string;
+  data: Record<string, any>[]
+}
+export type ITables = Record<IChartTypes, IChart>
