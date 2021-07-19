@@ -1,6 +1,7 @@
 .filters {
   position: relative;
   height: 0;
+  z-index: 1;
 
   .filtersWrapper {
     position: relative;
