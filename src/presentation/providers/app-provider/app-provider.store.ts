@@ -57,6 +57,7 @@ export function createAppProviderStore(this: any) {
         },
       },
     },
+    menuOpen: false,
     menuOption: null as unknown as IMenuOption,
     products: null as unknown as Record<number, unknown>,
     getFiltersActiveName(filterType: IFilterTypes) {
@@ -210,6 +211,9 @@ export function createAppProviderStore(this: any) {
     },
     setMenuOption(option: IMenuOption) {
       this.menuOption = option;
+    },
+    toggleMenuOpen() {
+      this.menuOpen = !this.menuOpen;
     },
     setActiveFilter(type: IFilterTypes, value: IFilterOption["name"]) {
       this.filters[type].options = this.filters[type].options.map((filter) => ({

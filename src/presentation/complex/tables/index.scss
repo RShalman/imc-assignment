@@ -5,6 +5,11 @@ table.tables {
   margin-bottom: 20px;
   border-collapse: separate;
 
+  @media (max-width: 1024px) {
+    display: inline-block;
+    overflow: auto;
+  }
+
   caption {
     font-size: 24px;
     font-weight: bold;

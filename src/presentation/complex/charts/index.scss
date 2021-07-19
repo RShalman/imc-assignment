@@ -1,4 +1,10 @@
 .charts {
+  position: relative;
+  max-width: 100vw;
+
+  &.narrowed {
+    max-width: calc(100vw - 450px);
+  }
 
   .label {
     font-size: 24px;

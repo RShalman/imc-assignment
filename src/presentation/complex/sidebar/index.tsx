@@ -20,14 +20,13 @@ const buttons = [
 
 const Sidebar = observer(() => {
   const appStore = useAppStore().root;
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   return (
-    <aside className={`sideBar ${menuOpen ? "open" : ""}`}>
+    <aside className={`sideBar ${appStore.menuOpen ? "open" : ""}`}>
       <div className={"menuIconWrapper"}>
         <ArrowMenuButton
-          isOpened={menuOpen}
-          onClick={() => setMenuOpen((prev) => !prev)}
+          isOpened={appStore.menuOpen}
+          onClick={appStore.toggleMenuOpen}
         />
       </div>
       <div className={"sidebarContent"}>
@@ -39,7 +38,10 @@ const Sidebar = observer(() => {
             value={btn.name}
             dimension={"l"}
             color={"white"}
-            onClick={() => appStore.setMenuOption(btn.option as IMenuOption)}
+            onClick={() => {
+              appStore.setMenuOption(btn.option as IMenuOption);
+              appStore.toggleMenuOpen();
+            }}
           />
         ))}
       </div>

@@ -28,7 +28,16 @@ const AppLayout = observer(({ children }: IAppLayoutProps): JSX.Element => {
       <main>
         <Filters />
         <div className={"page"}>
-          {PageComponent ? <PageComponent /> : <></>}
+          {PageComponent ? (
+            <PageComponent />
+          ) : (
+            <div className={"welcome"}>
+              <h1>Welcome to Foods 'n' Goods Dashboard!</h1>
+              <p>
+                Please, choose a dashboard from the menu at top left corner.
+              </p>
+            </div>
+          )}
         </div>
       </main>
     </div>
