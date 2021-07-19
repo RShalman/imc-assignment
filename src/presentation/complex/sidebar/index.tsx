@@ -23,7 +23,7 @@ const Sidebar = observer(() => {
 
   return (
     <aside className={`sideBar ${appStore.menuOpen ? "open" : ""}`}>
-      <div className={"menuIconWrapper"}>
+      <div data-testid={"menuButton"} className={"menuIconWrapper"}>
         <ArrowMenuButton
           isOpened={appStore.menuOpen}
           onClick={appStore.toggleMenuOpen}
