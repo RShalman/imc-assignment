@@ -7,7 +7,7 @@ import { IFilterTypes } from "../../providers/app-provider/app-provider.d";
 import { BiFilterAlt } from "react-icons/all";
 
 const Filters = observer(() => {
-  const [isFiltersVisible, setIsFiltersVisible] = useState<boolean>(true);
+  const [isFiltersVisible, setIsFiltersVisible] = useState<boolean>(false);
   const appStore = useAppStore().root;
   const filterNames = Object.keys(appStore.filters).filter((filter) =>
     appStore.menuOption === "tables" ? filter !== "period" : true

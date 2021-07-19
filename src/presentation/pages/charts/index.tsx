@@ -54,7 +54,9 @@ const ChartsPage = observer(() => {
           }
         </>
       ) : (
-        <Spinner />
+        <div className={"spinnerWrapper"}>
+          <Spinner />
+        </div>
       )}
     </div>
   );

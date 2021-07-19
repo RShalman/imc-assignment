@@ -9,18 +9,13 @@
     justify-content: flex-end;
     align-items: center;
     height: auto;
-    background-color: transparent;
-    max-height: 0;
     margin-right: 80px;
-    transition: max-height 0.15s ease-out;
+    background: linear-gradient(180deg, rgba(249,249,249,1) 0%, rgba(252,252,252,0.47102591036414565) 50%, rgba(255,255,255,0) 100%);
+    transform: translateY(0);
+    transition: transform 0.25s ease-in;
 
-    &.open{
-      max-height: 500px;
-      transition: max-height 0.75s ease-in;
-
-      & .toggleWrapper {
-        transform: translateY(0);
-      }
+    &.closed{
+      transform: translateY(calc(-100% - 40px));
     }
 
     .toggleWrapper {
@@ -29,8 +24,6 @@
       justify-content: center;
       align-items: center;
       margin: 20px;
-      transform: translateY(calc(-100% - 40px));
-      transition: transform 0.25s ease-in;
 
       .toggleLabel {
         text-align: center;
@@ -44,8 +37,8 @@
 
   .filterIcon {
     position: absolute;
-    top: 50px;
-    right: 20px;
+    top: 20px;
+    right: 40px;
     cursor: pointer;
   }
 }

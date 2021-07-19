@@ -28,7 +28,9 @@ const TablesPage = observer(() => {
           />
         </>
       ) : (
-        <Spinner />
+        <div className={"spinnerWrapper"}>
+          <Spinner />
+        </div>
       )}
     </div>
   );
